@@ -1,10 +1,22 @@
-from redis.asyncio import Redis
+from redis.asyncio import ConnectionPool, Redis
 
 from app.config import settings
 
+pool: ConnectionPool | None = None
+
+
+def init_pool() -> None:
+    global pool
+    pool = ConnectionPool.from_url(settings.redis_url, decode_responses=True)
+
+
+async def close_pool() -> None:
+    if pool:
+        await pool.aclose()
+
 
 def get_redis() -> Redis:
-    return Redis.from_url(settings.redis_url, decode_responses=True)
+    return Redis(connection_pool=pool)
 
 
 async def cache_link(redis: Redis, short_id: str, original_url: str) -> None:

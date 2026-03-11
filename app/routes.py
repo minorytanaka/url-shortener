@@ -20,7 +20,13 @@ from app.utils import generate_short_id
 router = APIRouter()
 
 
-@router.post("/shorten", response_model=ShortenResponse, status_code=201, tags=["Ссылки"], summary="Создать короткую ссылку")
+@router.post(
+    "/shorten",
+    response_model=ShortenResponse,
+    status_code=201,
+    tags=["Ссылки"],
+    summary="Создать короткую ссылку",
+)
 async def shorten_url(
     body: ShortenRequest,
     request: Request,
@@ -32,6 +38,17 @@ async def shorten_url(
     """
 
     original_url = str(body.url)
+    # если URL уже сокращён, возвращаем существующий
+    existing = await session.scalar(
+        select(Link).where(Link.original_url == original_url)
+    )
+    if existing:
+        base_url = str(request.base_url).rstrip("/")
+        return ShortenResponse(
+            short_id=existing.short_id,
+            short_url=f"{base_url}/{existing.short_id}",
+            original_url=existing.original_url,
+        )
     for _ in range(5):
         short_id = generate_short_id(settings.short_id_length)
         exists = await session.scalar(select(Link.id).where(Link.short_id == short_id))
@@ -76,7 +93,12 @@ async def redirect_to_url(
     return RedirectResponse(url=link.original_url, status_code=307)
 
 
-@router.get("/stats/{short_id}", response_model=StatsResponse, tags=["Статистика"], summary="Статистика переходов")
+@router.get(
+    "/stats/{short_id}",
+    response_model=StatsResponse,
+    tags=["Статистика"],
+    summary="Статистика переходов",
+)
 async def get_stats(
     short_id: str,
     session: AsyncSession = Depends(get_session),

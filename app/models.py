@@ -15,7 +15,7 @@ class Link(Base):
     short_id: Mapped[str] = mapped_column(
         String(10), unique=True, index=True, nullable=False
     )
-    original_url: Mapped[str] = mapped_column(Text, nullable=False)
+    original_url: Mapped[str] = mapped_column(Text, nullable=False, index=True)
     clicks: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
