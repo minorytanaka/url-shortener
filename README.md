@@ -17,6 +17,15 @@ curl -X POST http://185.68.247.167:8005/shorten \
 curl http://185.68.247.167:8005/stats/{short_id}
 ```
 
+## Нагрузочное тестирование
+Тест проводился на сервере 1 vCPU / 1 GB RAM (Ubuntu 24) с помощью `wrk`.
+**Редирект (GET /{short_id}) - основная нагрузка:**
+```
+wrk -t4 -c50 -d30s http://localhost:8005/{short_id}
+Requests/sec:    174.81
+Latency Avg:     273ms
+```
+
 ## Стек
 
 - **FastAPI** - фреймворк
