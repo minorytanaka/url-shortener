@@ -12,6 +12,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="URL Shortener",
+    description="Микросервис для сокращения ссылок.",
     version="1.0.0",
     lifespan=lifespan,
 )

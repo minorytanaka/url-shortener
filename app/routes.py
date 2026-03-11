@@ -20,7 +20,7 @@ from app.utils import generate_short_id
 router = APIRouter()
 
 
-@router.post("/shorten", response_model=ShortenResponse, status_code=201)
+@router.post("/shorten", response_model=ShortenResponse, status_code=201, tags=["Ссылки"], summary="Создать короткую ссылку")
 async def shorten_url(
     body: ShortenRequest,
     request: Request,
@@ -53,7 +53,7 @@ async def shorten_url(
     )
 
 
-@router.get("/{short_id}")
+@router.get("/{short_id}", tags=["Ссылки"], summary="Перейти по короткой ссылке")
 async def redirect_to_url(
     short_id: str,
     session: AsyncSession = Depends(get_session),
@@ -76,7 +76,7 @@ async def redirect_to_url(
     return RedirectResponse(url=link.original_url, status_code=307)
 
 
-@router.get("/stats/{short_id}", response_model=StatsResponse)
+@router.get("/stats/{short_id}", response_model=StatsResponse, tags=["Статистика"], summary="Статистика переходов")
 async def get_stats(
     short_id: str,
     session: AsyncSession = Depends(get_session),
