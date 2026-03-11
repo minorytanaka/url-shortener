@@ -7,7 +7,11 @@ pool: ConnectionPool | None = None
 
 def init_pool() -> None:
     global pool
-    pool = ConnectionPool.from_url(settings.redis_url, decode_responses=True)
+    pool = ConnectionPool.from_url(
+        settings.redis_url,
+        decode_responses=True,
+        max_connections=settings.redis_max_connections,
+    )
 
 
 async def close_pool() -> None:
