@@ -38,17 +38,6 @@ async def shorten_url(
     """
 
     original_url = str(body.url)
-    # если URL уже сокращён, возвращаем существующий
-    existing = await session.scalar(
-        select(Link).where(Link.original_url == original_url)
-    )
-    if existing:
-        base_url = str(request.base_url).rstrip("/")
-        return ShortenResponse(
-            short_id=existing.short_id,
-            short_url=f"{base_url}/{existing.short_id}",
-            original_url=existing.original_url,
-        )
     for _ in range(5):
         short_id = generate_short_id(settings.short_id_length)
         exists = await session.scalar(select(Link.id).where(Link.short_id == short_id))
