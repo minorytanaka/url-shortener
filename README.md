@@ -166,7 +166,7 @@ url_shortener/
 │   ├── test_cache.py    # Тесты Redis-кэширования
 │   └── test_utils.py    # Unit-тесты утилит
 ├── nginx/
-│   └── nginx.conf       # Rate limiting + reverse proxy
+│   └── nginx.conf               # Rate limiting + reverse proxy
 ├── docker-compose.yml           # Продакшен
 ├── docker-compose.override.yml  # Dev-оверрайды
 ├── Dockerfile
