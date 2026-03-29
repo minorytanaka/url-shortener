@@ -62,7 +62,7 @@ Client -> Nginx (:8005) -> Uvicorn/FastAPI (:8000) -> PostgreSQL
 
 ```bash
 # 1. Клонировать репозиторий
-git clone [<repo-url>](https://github.com/minorytanaka/url-shortener.git)
+git clone https://github.com/minorytanaka/url-shortener.git
 cd url_shortener
 
 # 2. Создать .env из шаблона
