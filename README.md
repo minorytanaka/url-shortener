@@ -1,11 +1,11 @@
-# Сократитель ссылок - тестовое задание
+# Сократитель ссылок
 
 Микросервис для сокращения ссылок (аналог bitly).
 
 ## Live Demo
 Сервис развёрнут и доступен для тестирования:
-- **API:** http://185.68.247.167:8005
-- **Swagger:** http://185.68.247.167:8005/docs
+- **API:** http://212.192.9.203:8005
+- **Swagger:** http://212.192.9.203:8005/docs
 
 ```bash
 # Создать короткую ссылку
@@ -62,7 +62,7 @@ Client -> Nginx (:8005) -> Uvicorn/FastAPI (:8000) -> PostgreSQL
 
 ```bash
 # 1. Клонировать репозиторий
-git clone <repo-url>
+git clone [<repo-url>](https://github.com/minorytanaka/url-shortener.git)
 cd url_shortener
 
 # 2. Создать .env из шаблона
